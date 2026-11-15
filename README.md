@@ -2,7 +2,7 @@
 
 A source-first study desk that helps students find evidence in their own notes, draft a cited explanation, and practise recall.
 
-[GitHub Pages URL (deployment pending)](https://sidoxsinu.github.io/noteanchor/) · [Source code](https://github.com/sidoxsinu/noteanchor) · [MIT license](LICENSE)
+[Live demo](https://sidoxsinu.github.io/noteanchor/) · [Source code](https://github.com/sidoxsinu/noteanchor) · [MIT license](LICENSE)
 
 > **Prototype:** NoteAnchor has not been field-tested with a student cohort and has no measured impact data. A citation is a pointer to a matching passage, not proof that an explanation is correct; check the source notes.
 
@@ -18,7 +18,7 @@ Evidence lookup and recall practice work without the optional model. NoteAnchor 
 
 ## Demo URL
 
-The intended public URL is [NoteAnchor on GitHub Pages](https://sidoxsinu.github.io/noteanchor/). The demo is not live until the GitHub Pages workflow succeeds; for now, use the local setup below.
+Open [NoteAnchor on GitHub Pages](https://sidoxsinu.github.io/noteanchor/), load the sample or paste your own notes, and choose Find evidence or Build recall quiz. The public deployment has passed the same browser smoke checks as the local app, including text upload and mobile layout. Optional model generation is device-dependent and is not covered by those smoke checks.
 
 On first guide use, the browser loads the optional local model runtime—including a 26.9 MB uncompressed ONNX WASM asset in the current build—and model files from [Hugging Face](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct). Actual transfer size depends on compression. A stalled model-file request is aborted after two minutes. Model loading can take time and use your device's memory; the guide is optional.
 

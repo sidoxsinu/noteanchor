@@ -75,7 +75,7 @@ async function loadGenerator(onStatus) {
       }
     }
 
-    return pipeline('text-generation', MODEL_ID, options);
+    return pipeline('text-generation', MODEL_ID, { ...options, device: 'wasm' });
   })().catch((error) => {
     generatorPromise = null;
     throw error;

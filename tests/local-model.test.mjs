@@ -66,3 +66,9 @@ test('createTimeoutFetch forwards an existing caller abort signal', async () => 
 
   await assert.rejects(request, /caller cancelled/);
 });
+
+test('browser CPU fallback explicitly selects the WASM backend', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const source = await readFile(new URL('../src/local-model.js', import.meta.url), 'utf8');
+  assert.match(source, /return pipeline\('text-generation', MODEL_ID, \{ \.\.\.options, device: 'wasm' \}\)/);
+});
