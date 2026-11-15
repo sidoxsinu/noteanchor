@@ -1,6 +1,6 @@
 # NoteAnchor — notes you can trace
 
-Status: Publicly deployed prototype. All 24 local Node tests pass; the production build succeeds, and the previous public GitHub Pages deployment passed core browser smoke checks. The current GPU-adapter probe awaits public redeployment. Optional local-model generation ran in the local browser check but returned a draft that failed quote validation; the app correctly withheld it. Code for a Billion was submitted as issue #187; timing eligibility is unconfirmed. NoteAnchor cannot be submitted to Homingo because it predates kickoff.
+Status: Publicly deployed prototype. All 24 local Node tests pass; the production build and GitHub Pages deployment succeed. The public JavaScript asset matches the tested GPU-adapter-probe build, and fresh hosted evidence-lookup and answer-hidden-quiz checks pass. Optional local-model generation ran in the local browser check but returned a draft that failed quote validation; the app correctly withheld it. Code for a Billion was submitted as issue #187; timing eligibility is unconfirmed. NoteAnchor cannot be submitted to Homingo because it predates kickoff.
 
 ## Objective
 
@@ -39,7 +39,7 @@ The frontend uses vanilla JavaScript and Vite, with independently tested note pa
 - Browser smoke: empty-state controls, sample notes, evidence lookup, quiz answer hiding, stale-result clearing, text upload, mobile-width check, and no unsolicited model download pass.
 - Browser regression: model requests are held locally to verify note edits cannot re-enable the guide button, stale output gets a status, and cleanup resets its busy state.
 - `npm run build` succeeds. Vite emits a warning for the optional model-runtime chunk (544 KB uncompressed); it is loaded only when the user requests a guide.
-- Public Pages deployment succeeded: https://github.com/sidoxsinu/noteanchor/actions/runs/43762690685. The hosted demo passed core browser smoke checks at https://sidoxsinu.github.io/noteanchor/. Optional model inference must not be represented as guaranteed on every device.
+- Public Pages deployment of the tested GPU-adapter probe succeeded: https://github.com/sidoxsinu/noteanchor/actions/runs/43763934927. The hosted demo at https://sidoxsinu.github.io/noteanchor/ serves the matching tested JavaScript asset and passed fresh evidence-lookup and answer-hidden-quiz checks. Optional model inference must not be represented as guaranteed on every device.
 - Local real-browser model check: the model executed after the adapter-probe correction, but its draft failed exact-quote validation. The application displayed unedited source passages rather than an unvalidated explanation. A successful generated study guide has not been verified in this environment.
 
 ## Event constraints
