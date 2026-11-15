@@ -72,3 +72,12 @@ test('browser CPU fallback explicitly selects the WASM backend', async () => {
   const source = await readFile(new URL('../src/local-model.js', import.meta.url), 'utf8');
   assert.match(source, /return pipeline\('text-generation', MODEL_ID, \{ \.\.\.options, device: 'wasm' \}\)/);
 });
+
+test('hasWebGpuAdapter rejects absent hardware and adapter errors', async () => {
+  const { hasWebGpuAdapter } = await loadModelModule();
+  assert.equal(typeof hasWebGpuAdapter, 'function');
+  assert.equal(await hasWebGpuAdapter(null), false);
+  assert.equal(await hasWebGpuAdapter({ requestAdapter: async () => null }), false);
+  assert.equal(await hasWebGpuAdapter({ requestAdapter: async () => { throw new Error('unavailable'); } }), false);
+  assert.equal(await hasWebGpuAdapter({ requestAdapter: async () => ({}) }), true);
+});

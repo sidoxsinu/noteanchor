@@ -6,6 +6,14 @@ const MODEL_FILE_TIMEOUT_MS = 120_000;
 let generatorPromise = null;
 let modelRequestTimedOut = false;
 
+export async function hasWebGpuAdapter(gpu = globalThis.navigator?.gpu) {
+  try {
+    return Boolean(await gpu?.requestAdapter());
+  } catch {
+    return false;
+  }
+}
+
 export function createTimeoutFetch(fetchImpl, timeoutMs, onTimeout = () => {}) {
   return (input, init = {}) => {
     const controller = new AbortController();
@@ -66,7 +74,7 @@ async function loadGenerator(onStatus) {
     );
     const options = { dtype: 'q4' };
 
-    if (typeof navigator !== 'undefined' && navigator.gpu) {
+    if (await hasWebGpuAdapter()) {
       try {
         return await pipeline('text-generation', MODEL_ID, { ...options, device: 'webgpu' });
       } catch (error) {
