@@ -1,6 +1,6 @@
 # NoteAnchor — notes you can trace
 
-Status: Implemented prototype. All 22 local Node tests and both browser regressions pass; the production build succeeds with one optional-model chunk-size warning. Public Pages deployment and event submissions are pending.
+Status: Publicly deployed prototype. All 24 local Node tests pass; the production build succeeds, and the previous public GitHub Pages deployment passed core browser smoke checks. The current GPU-adapter probe awaits public redeployment. Optional local-model generation ran in the local browser check but returned a draft that failed quote validation; the app correctly withheld it. Code for a Billion was submitted as issue #187; timing eligibility is unconfirmed. NoteAnchor cannot be submitted to Homingo because it predates kickoff.
 
 ## Objective
 
@@ -35,11 +35,12 @@ The frontend uses vanilla JavaScript and Vite, with independently tested note pa
 
 ## Local verification
 
-- Node test suite: 22 passing tests, including timeout abort and preservation of caller cancellation.
+- Node test suite: 24 passing tests, including timeout abort, preservation of caller cancellation, explicit WASM selection for browser CPU fallback, and checking for a usable WebGPU adapter rather than API presence alone.
 - Browser smoke: empty-state controls, sample notes, evidence lookup, quiz answer hiding, stale-result clearing, text upload, mobile-width check, and no unsolicited model download pass.
 - Browser regression: model requests are held locally to verify note edits cannot re-enable the guide button, stale output gets a status, and cleanup resets its busy state.
 - `npm run build` succeeds. Vite emits a warning for the optional model-runtime chunk (544 KB uncompressed); it is loaded only when the user requests a guide.
-- The first live Pages deployment and the hosted demo still require independent verification.
+- Public Pages deployment succeeded: https://github.com/sidoxsinu/noteanchor/actions/runs/43762690685. The hosted demo passed core browser smoke checks at https://sidoxsinu.github.io/noteanchor/. Optional model inference must not be represented as guaranteed on every device.
+- Local real-browser model check: the model executed after the adapter-probe correction, but its draft failed exact-quote validation. The application displayed unedited source passages rather than an unvalidated explanation. A successful generated study guide has not been verified in this environment.
 
 ## Event constraints
 
@@ -51,10 +52,12 @@ Source: https://codeforindia.org/hackathon and https://github.com/karlmehta/code
 
 ### Homingo Hack Days 2026
 
-Registration is confirmed as a solo participant in the LLM apps track with Beginner AI experience. Kick-off is 21 November 2026, the build phase is 21 November–6 December, and the final submission window is 4–6 December. Do not submit before that window. This prototype predates the kick-off, so check the announced problem statement and the event's pre-existing-work policy at kick-off before submitting it.
+Registration is confirmed as a solo participant in the LLM apps track with Beginner AI experience. Kick-off is 21 November 2026, the build phase is 21 November–6 December, and the final submission window is 4–6 December. Section 09 of the official terms explicitly prohibits submitting anything a participant started building before kick-off, even if it is later made public. NoteAnchor predates kick-off and is therefore not eligible for Homingo. Do not submit this repository there. A separate implementation must begin during the official build phase; only ideas and planning may precede it.
 
-Source: https://hackathon.homingo.co.in/how-it-works
+Sources: https://hackathon.homingo.co.in/how-it-works and https://hackathon.homingo.co.in/terms
 
 ## Submission status
 
-No final event submission is claimed in this specification. Code for a Billion late eligibility is uncertain; Homingo's final window has not opened. Do not backdate development, deployment, or submission, and do not claim impact without field evidence.
+Code for a Billion: submitted through the official GitHub issue template as https://github.com/karlmehta/code-for-a-billion/issues/187 at 2026-11-15 21:27:58 UTC / 2026-11-16 02:57:58 IST, with the submission label. The entry discloses the deployment timestamp, uncertain cutoff timezone, absence of measured learner impact, AgentFoundry usage, and optional-model limitation. Issue creation is not confirmation of on-time eligibility or judging acceptance.
+
+Homingo: not submitted. NoteAnchor is ineligible because it predates the 21 November kickoff; a separate implementation must start during the permitted build phase. The final submission window is 4–6 December 2026. Do not backdate development, deployment, or submission, and do not claim impact without field evidence.

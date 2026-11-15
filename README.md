@@ -46,6 +46,7 @@ npm run preview
 - Notes are held in the current browser page and are not saved by NoteAnchor after the tab closes. There is no account, application backend, analytics, or cloud sync.
 - The optional model performs inference in the browser. Notes are not sent to a hosted inference service. The initial model download does make network requests to Hugging Face.
 - The local model is small and may return incomplete or incorrect explanations. NoteAnchor validates citation IDs and exact quote text, not the truth or full meaning of the generated explanation.
+- In an available-browser test, the optional model ran but its draft failed quote validation. The app withheld that draft and showed source passages instead. A successful generated guide has not been verified in this environment; use evidence lookup and recall practice for the demonstrated core flow.
 - Only plain text is supported; PDF/OCR, collaboration, grades, and persistent note storage are out of scope.
 
 ## Development notes
