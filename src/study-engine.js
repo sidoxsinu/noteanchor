@@ -96,6 +96,50 @@ export function validateQuiz(items, passages) {
   ));
 }
 
+export function buildClozeQuiz(passages) {
+  if (!Array.isArray(passages)) return [];
+  const usedAnswers = new Set();
+
+  return passages.flatMap((passage) => {
+    const text = passage?.text;
+    if (typeof text !== 'string' || typeof passage.id !== 'string') return [];
+
+    const candidates = (text.match(/[\p{L}\p{N}]{4,}/gu) ?? [])
+      .filter((word) => !STOP_WORDS.has(word.toLocaleLowerCase('en')))
+      .sort((left, right) => right.length - left.length);
+    const answer = candidates.find((word) => {
+      const key = word.toLocaleLowerCase('en');
+      return !usedAnswers.has(key) && text.toLocaleLowerCase('en').split(key).length === 2;
+    });
+    if (!answer) return [];
+
+    usedAnswers.add(answer.toLocaleLowerCase('en'));
+    return [{
+      question: `Fill in the missing term: ${text.replace(answer, '_____')}`,
+      answer,
+      explanation: `The exact term appears in source passage ${passage.id}.`,
+      citations: [{ id: passage.id, quote: text }],
+    }];
+  }).slice(0, 10);
+}
+
+export function validateClozeQuiz(items, passages) {
+  if (!Array.isArray(items) || items.length < 1 || items.length > 10 || !Array.isArray(passages)) return false;
+
+  return items.every((item) => {
+    if (
+      typeof item?.question !== 'string' || !item.question.includes('_____') ||
+      typeof item.answer !== 'string' || item.answer.trim().length < 4 ||
+      item.question.toLocaleLowerCase('en').includes(item.answer.toLocaleLowerCase('en')) ||
+      typeof item.explanation !== 'string' || item.explanation.trim().length === 0 ||
+      !validateCitations(item.citations, passages)
+    ) return false;
+
+    const source = passages.find(({ id }) => id === item.citations[0].id)?.text;
+    return typeof source === 'string' && source.toLocaleLowerCase('en').includes(item.answer.toLocaleLowerCase('en'));
+  });
+}
+
 export function parseModelJson(rawOutput) {
   if (typeof rawOutput !== 'string') return null;
   const cleaned = rawOutput.trim().replace(/^```(?:json)?\s*/iu, '').replace(/\s*```$/u, '');

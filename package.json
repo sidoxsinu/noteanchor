@@ -1,0 +1,22 @@
+{
+  "name": "noteanchor",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "A source-linked study helper for notes, cited drafts, and recall practice.",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test --test-reporter=spec tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.2"
+  },
+  "devDependencies": {
+    "vite": "8.3.8"
+  }
+}

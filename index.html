@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f2efe6" />
+    <meta name="description" content="A private study desk that connects explanations and recall practice to your own notes." />
+    <title>NoteAnchor — study from your own notes</title>
+  </head>
+  <body>
+    <div class="page-frame">
+      <header class="topbar">
+        <a class="wordmark" href="./" aria-label="NoteAnchor home">
+          <span class="wordmark-mark" aria-hidden="true">N.</span>
+          <span>NOTEANCHOR</span>
+        </a>
+        <div class="privacy-note"><span class="privacy-dot" aria-hidden="true"></span> Your notes stay in this browser tab</div>
+      </header>
+
+      <main class="app-shell">
+        <section class="intro" aria-labelledby="page-title">
+          <p class="eyebrow">A study desk for the material you already have</p>
+          <h1 id="page-title">Keep every idea<br /><em>attached to its source.</em></h1>
+          <p class="intro-copy">Paste a page of notes. Find the passage that answers your question, draft a cited explanation on your device, or practise one term at a time.</p>
+          <div class="intro-rule" aria-hidden="true"><span>01</span><span>Read · connect · recall</span><span>02</span></div>
+        </section>
+
+        <section class="workspace" aria-label="Study workspace">
+          <section class="notes-panel" aria-labelledby="notes-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Your source material</p>
+                <h2 id="notes-heading">Notes</h2>
+              </div>
+              <span id="notes-count" class="count-label">0 passages · 0 / 12,000</span>
+            </div>
+
+            <label class="sr-only" for="notes-input">Paste or type your study notes</label>
+            <textarea id="notes-input" spellcheck="true" placeholder="Paste a section from your notes here…&#10;&#10;Each sentence or line becomes a numbered source passage."></textarea>
+
+            <div class="notes-tools">
+              <label class="upload-button" for="upload-input">Open .txt file</label>
+              <input id="upload-input" class="sr-only" type="file" accept=".txt,text/plain" />
+              <button id="load-sample-button" class="text-button" type="button">Use sample notes</button>
+            </div>
+            <p class="notes-hint">Plain text only. Up to 12,000 characters. Notes are not saved when this tab closes.</p>
+            <p id="notes-error" class="field-error" role="alert"></p>
+          </section>
+
+          <section class="study-panel" aria-labelledby="study-heading">
+            <div class="panel-heading study-heading">
+              <div>
+                <p class="eyebrow">Work from the evidence</p>
+                <h2 id="study-heading">Study</h2>
+              </div>
+              <span class="local-label">LOCAL · OPTIONAL</span>
+            </div>
+
+            <form id="question-form" class="question-form">
+              <label for="question-input">What do you want to understand?</label>
+              <div class="question-row">
+                <input id="question-input" type="text" autocomplete="off" placeholder="e.g. What does the control group do?" />
+                <button id="answer-button" class="primary-button" type="submit" disabled>Find evidence</button>
+              </div>
+            </form>
+
+            <div class="action-row">
+              <button id="guide-button" class="secondary-button" type="button" disabled>Generate cited guide</button>
+              <button id="quiz-button" class="secondary-button" type="button" disabled>Build recall quiz</button>
+            </div>
+            <p class="model-note">The optional guide runs in your browser after a one-time model download. A stalled model-file request times out after two minutes. Quote matches are checked; claim support is not verified. Evidence lookup and recall quizzes work without the model.</p>
+
+            <div id="app-status" class="app-status" role="status" aria-live="polite"></div>
+            <div id="output-region" class="output-region" role="region" aria-label="Study results" aria-live="polite">
+              <div class="empty-state">
+                <span class="empty-index" aria-hidden="true">A</span>
+                <p>Start with your notes. Your answer, guide, or quiz will appear here.</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <footer class="page-footer">
+          <span>Source-first by design.</span>
+          <span>Model citations are pointers to your notes, not proof of truth.</span>
+        </footer>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

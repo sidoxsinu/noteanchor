@@ -111,3 +111,27 @@ test('validateStudyGuide requires source-backed key ideas and rejects fabricated
   assert.equal(validateStudyGuide(guide, passages), true);
   assert.equal(validateStudyGuide({ ...guide, keyIdeas: [{ ...guide.keyIdeas[0], citations: [{ id: 'P99', quote: 'Mitochondria release energy.' }] }] }, passages), false);
 });
+
+test('buildClozeQuiz masks a term from the notes and cites the exact source passage', async () => {
+  const { buildClozeQuiz, parseNotes, validateClozeQuiz } = await loadEngine();
+  assert.equal(typeof buildClozeQuiz, 'function', 'buildClozeQuiz should exist before its behavior can be tested');
+  const passages = parseNotes('Photosynthesis stores energy in glucose.');
+  const items = buildClozeQuiz(passages);
+
+  assert.equal(items.length, 1);
+  assert.match(items[0].question, /_____/);
+  assert.equal(items[0].question.toLocaleLowerCase('en').includes(items[0].answer.toLocaleLowerCase('en')), false);
+  assert.deepEqual(items[0].citations, [{ id: 'P01', quote: passages[0].text }]);
+  assert.equal(validateClozeQuiz(items, passages), true);
+});
+
+test('validateClozeQuiz rejects visible answers, missing blanks, and answers not present in the source', async () => {
+  const { buildClozeQuiz, parseNotes, validateClozeQuiz } = await loadEngine();
+  assert.equal(typeof buildClozeQuiz, 'function', 'buildClozeQuiz should exist before its behavior can be tested');
+  const passages = parseNotes('Photosynthesis stores energy in glucose.');
+  const [item] = buildClozeQuiz(passages);
+
+  assert.equal(validateClozeQuiz([{ ...item, question: `${item.question} ${item.answer}` }], passages), false);
+  assert.equal(validateClozeQuiz([{ ...item, question: 'Name the main idea.' }], passages), false);
+  assert.equal(validateClozeQuiz([{ ...item, answer: '42' }], passages), false);
+});
